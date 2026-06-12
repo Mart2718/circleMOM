@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>C.4b Activity Suite | CalcBridge Math Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --teal-900:#0d3b3e;--teal-700:#145f65;--teal-500:#1e8a92;
+      --teal-200:#a8dde0;--teal-50:#eef8f9;
+      --orange:#e8721c;--orange-light:#fdebd7;
+      --ink:#1a1f22;--ink-mid:#3d4a50;--ink-light:#6b7c84;
+      --rule:#cdd9dc;--white:#ffffff;
+      --font-display:'Fraunces',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --font-mono:'DM Mono','Courier New',monospace;
+      --radius:10px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);background:var(--teal-900);min-height:100vh;display:flex;flex-direction:column;}
+    .skip-link{position:absolute;top:-999px;left:0;background:var(--orange);color:var(--white);padding:.5rem 1rem;font-weight:600;z-index:999;border-radius:0 0 var(--radius) 0;}
+    .skip-link:focus{top:0;}
+
+    /* ── Hero ── */
+    .hero{padding:2.5rem 1.5rem 2rem;text-align:center;}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.6rem;}
+    .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.15;color:var(--white);}
+    .hero h1 em{font-style:italic;color:var(--teal-200);}
+    .hero-sub{margin-top:.85rem;font-size:.97rem;color:var(--teal-200);max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;}
+
+    /* ── Sequence label ── */
+    .sequence-label{text-align:center;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-200);opacity:.7;margin-bottom:1.25rem;}
+
+    /* ── Card grid ── */
+    main{flex:1;padding:0 1.25rem 3rem;max-width:900px;margin:0 auto;width:100%;}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;}
+
+    /* ── Individual card ── */
+    .lesson-card{background:var(--white);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+    .lesson-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.28);}
+
+    .card-top{padding:1.4rem 1.4rem .9rem;flex:1;}
+    .card-num{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-500);margin-bottom:.4rem;}
+    .card-title{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--teal-900);line-height:1.2;margin-bottom:.6rem;}
+    .card-desc{font-size:.9rem;color:var(--ink-mid);line-height:1.55;}
+    .card-topics{margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.4rem;}
+    .topic-chip{font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;background:var(--teal-50);color:var(--teal-700);padding:.15rem .55rem;border-radius:20px;border:1px solid var(--teal-200);}
+
+    .card-footer{padding:.9rem 1.4rem 1.2rem;border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;}
+    .card-time{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-light);}
+
+    .start-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--teal-700);color:var(--white);font-family:var(--font-body);font-weight:600;font-size:.88rem;padding:.5rem 1.1rem;border-radius:20px;text-decoration:none;border:none;cursor:pointer;transition:background .15s;}
+    .start-btn:hover{background:var(--teal-500);}
+    .start-btn:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .start-btn svg{width:14px;height:14px;fill:currentColor;}
+
+    /* Card accent strips */
+    .card-strip{height:5px;}
+    .strip-1{background:linear-gradient(90deg,var(--teal-500),var(--teal-200));}
+    .strip-2{background:linear-gradient(90deg,var(--orange),#f5a65b);}
+    .strip-3{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+
+    /* ── Footer note ── */
+    .suite-note{text-align:center;padding:1.5rem 1rem 2rem;font-size:.82rem;color:var(--teal-200);opacity:.7;}
+
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;}}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="hero" role="banner">
+    <p class="hero-eyebrow">CalcBridge Math Academy · Unit C · C.4b Activity Suite</p>
+    <h1>Distance, Midpoint,<br>and <em>Equations of Circles</em></h1>
+    <p class="hero-sub">Three connected lessons. Complete them in order — each one builds directly on the last.</p>
+  </header>
+
+  <main id="main-content">
+    <p class="sequence-label">Complete in order ↓</p>
+    <div class="card-grid" role="list">
+
+      <!-- Card 1 -->
+      <article class="lesson-card" role="listitem">
+        <div class="card-strip strip-1" aria-hidden="true"></div>
+        <div class="card-top">
+          <p class="card-num">Lesson 1 of 3</p>
+          <h2 class="card-title">The Distance Formula</h2>
+          <p class="card-desc">Connect the Pythagorean Theorem to the Distance Formula, then practice finding distances — including one a surveyor couldn't walk.</p>
+          <div class="card-topics" aria-label="Topics covered">
+            <span class="topic-chip">Pythagorean Theorem</span>
+            <span class="topic-chip">Distance Formula</span>
+            <span class="topic-chip">Negative Coordinates</span>
+            <span class="topic-chip">Real-World Application</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-time">⏱ ~15 min</span>
+          <a href="c4b-distance-formula.html" class="start-btn" aria-label="Start Lesson 1: The Distance Formula">
+            Start
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="lesson-card" role="listitem">
+        <div class="card-strip strip-2" aria-hidden="true"></div>
+        <div class="card-top">
+          <p class="card-num">Lesson 2 of 3</p>
+          <h2 class="card-title">The Midpoint Formula</h2>
+          <p class="card-desc">Learn to find the exact center between two points — a tool you'll need to locate the center of a circle from its diameter.</p>
+          <div class="card-topics" aria-label="Topics covered">
+            <span class="topic-chip">Midpoint Formula</span>
+            <span class="topic-chip">Averaging Coordinates</span>
+            <span class="topic-chip">Subtract vs. Add</span>
+            <span class="topic-chip">Work Backwards</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-time">⏱ ~10 min</span>
+          <a href="c4b-midpoint-formula.html" class="start-btn" aria-label="Start Lesson 2: The Midpoint Formula">
+            Start
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="lesson-card" role="listitem">
+        <div class="card-strip strip-3" aria-hidden="true"></div>
+        <div class="card-top">
+          <p class="card-num">Lesson 3 of 3</p>
+          <h2 class="card-title">Equation of a Circle</h2>
+          <p class="card-desc">Derive the standard form equation from the distance formula, write and read equations, and complete the square to recover a circle from general form.</p>
+          <div class="card-topics" aria-label="Topics covered">
+            <span class="topic-chip">Standard Form</span>
+            <span class="topic-chip">Center & Radius</span>
+            <span class="topic-chip">Completing the Square</span>
+            <span class="topic-chip">General Form</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-time">⏱ ~20 min</span>
+          <a href="c4b-equation-of-circle.html" class="start-btn" aria-label="Start Lesson 3: Equation of a Circle">
+            Start
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+    <p class="suite-note">All three lessons are part of Unit C · CalcBridge Math Academy · Santa Ana College</p>
+  </main>
+</body>
+</html>

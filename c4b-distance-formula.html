@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C.4b Extension: The Distance Formula | CalcBridge Math Academy</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root{--teal-900:#0d3b3e;--teal-700:#145f65;--teal-500:#1e8a92;--teal-200:#a8dde0;--teal-50:#eef8f9;--orange:#e8721c;--orange-light:#fdebd7;--ink:#1a1f22;--ink-mid:#3d4a50;--ink-light:#6b7c84;--rule:#cdd9dc;--white:#ffffff;--grid-bg:#f0f6f7;--font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono','Courier New',monospace;--radius:8px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);font-size:1rem;line-height:1.65;color:var(--ink);background:var(--white);}
+    .skip-link{position:absolute;top:-999px;left:0;background:var(--orange);color:var(--white);padding:.5rem 1rem;font-weight:600;z-index:999;border-radius:0 0 var(--radius) 0;}
+    .skip-link:focus{top:0;}
+    main{max-width:860px;margin:0 auto;padding:0 1.5rem 4rem;}
+    .hero{background:var(--teal-900);color:var(--white);padding:2.5rem 1.5rem 2rem;text-align:center;}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.6rem;}
+    .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.2;color:var(--white);}
+    .hero h1 em{font-style:italic;color:var(--teal-200);}
+    .hero-sub{margin-top:.75rem;font-size:.95rem;color:var(--teal-200);max-width:540px;margin-left:auto;margin-right:auto;}
+    .progress-trail{display:flex;align-items:center;justify-content:center;padding:1.25rem 1rem;background:var(--teal-50);border-bottom:2px solid var(--teal-200);flex-wrap:wrap;}
+    .trail-step{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.72rem;font-family:var(--font-mono);color:var(--ink-light);padding:0 .5rem;}
+    .trail-step.done .trail-icon{background:var(--teal-500);color:var(--white);}
+    .trail-step.active .trail-icon{background:var(--orange);color:var(--white);box-shadow:0 0 0 3px var(--orange-light);}
+    .trail-step.upcoming .trail-icon{background:var(--rule);color:var(--ink-light);}
+    .trail-icon{width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;margin-bottom:.35rem;}
+    .trail-connector{width:2.5rem;height:2px;background:var(--rule);margin-bottom:1.1rem;flex-shrink:0;}
+    .trail-step.done+.trail-connector{background:var(--teal-500);}
+    .section-block{margin-top:2.5rem;}
+    .section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-500);margin-bottom:.4rem;}
+    .section-block h2{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--teal-900);line-height:1.25;margin-bottom:1rem;}
+    .recall-card{background:var(--teal-50);border-left:4px solid var(--teal-500);border-radius:0 var(--radius) var(--radius) 0;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+    .recall-card p{color:var(--ink-mid);font-size:.97rem;}
+    .diagram-wrap{background:var(--grid-bg);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem;text-align:center;margin:.75rem 0;overflow:hidden;}
+    .diagram-wrap svg{max-width:100%;height:auto;}
+    .diagram-caption{font-size:.82rem;color:var(--ink-light);margin-top:.6rem;font-style:italic;}
+    .formula-box{background:var(--teal-900);color:var(--white);border-radius:var(--radius);padding:1.5rem 2rem;text-align:center;margin:1.5rem 0;}
+    .formula-box .formula-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.5rem;}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0;}
+    @media(max-width:560px){.compare-grid{grid-template-columns:1fr;}}
+    .compare-card{border-radius:var(--radius);padding:1.25rem;border:1.5px solid var(--rule);}
+    .compare-card.pyth{background:var(--teal-50);border-color:var(--teal-200);}
+    .compare-card.dist{background:var(--orange-light);border-color:#f0b080;}
+    .compare-card h3{font-family:var(--font-mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;}
+    .compare-card.pyth h3{color:var(--teal-700);}
+    .compare-card.dist h3{color:var(--orange);}
+    .compare-card p{font-size:.95rem;color:var(--ink-mid);margin-bottom:.5rem;}
+    .worked-example{border:1.5px solid var(--rule);border-radius:var(--radius);overflow:hidden;margin:1.5rem 0;}
+    .we-header{background:var(--teal-700);color:var(--white);padding:.75rem 1.25rem;font-family:var(--font-mono);font-size:.82rem;letter-spacing:.06em;}
+    .we-body{padding:1.25rem;}
+    .we-body>p{margin-bottom:.6rem;color:var(--ink-mid);font-size:.95rem;}
+    .we-step{display:flex;gap:1rem;align-items:flex-start;margin-bottom:.85rem;}
+    .we-step-num{flex-shrink:0;width:1.6rem;height:1.6rem;background:var(--teal-500);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;margin-top:.15rem;}
+    .we-step-text{font-size:.95rem;color:var(--ink-mid);}
+    .problem-set{counter-reset:problem;list-style:none;padding:0;}
+    .problem-item{counter-increment:problem;border:1.5px solid var(--rule);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;position:relative;}
+    .problem-item::before{content:counter(problem);position:absolute;top:1rem;left:-1px;background:var(--teal-700);color:var(--white);font-family:var(--font-mono);font-size:.78rem;font-weight:600;padding:.15rem .55rem;border-radius:0 var(--radius) var(--radius) 0;}
+    .problem-text{padding-left:1.5rem;font-size:.97rem;color:var(--ink);margin-bottom:.85rem;}
+    .problem-tag{display:inline-block;font-family:var(--font-mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.1rem .5rem;border-radius:20px;margin-left:1.5rem;margin-bottom:.75rem;}
+    .tag-basic{background:#dff0d8;color:#1e5c14;}
+    .tag-medium{background:#fff3cd;color:#6b4c00;}
+    .tag-applied{background:#e8e0f5;color:#4a2080;}
+    .toggle-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-left:1.5rem;}
+    .answer-toggle,.graph-toggle{display:inline-flex;align-items:center;gap:.4rem;background:none;font-family:var(--font-body);font-size:.85rem;font-weight:600;padding:.35rem .9rem;border-radius:20px;cursor:pointer;transition:background .15s;}
+    .answer-toggle{border:1.5px solid var(--teal-500);color:var(--teal-700);}
+    .answer-toggle:hover{background:var(--teal-50);}
+    .graph-toggle{border:1.5px solid var(--orange);color:var(--orange);}
+    .graph-toggle:hover{background:var(--orange-light);}
+    .answer-toggle:focus-visible,.graph-toggle:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .answer-panel{display:none;margin:.75rem 1.5rem 0;padding:1rem 1.25rem;background:var(--teal-50);border-left:3px solid var(--teal-500);border-radius:0 var(--radius) var(--radius) 0;font-size:.93rem;color:var(--ink-mid);}
+    .answer-panel.open{display:block;}
+    .answer-panel p+p{margin-top:.5rem;}
+    .graph-panel{display:none;margin:.75rem 1.5rem 0;}
+    .graph-panel.open{display:block;}
+    .app-context{background:#f5f0fc;border-left:4px solid #7c3aed;border-radius:0 var(--radius) var(--radius) 0;padding:1rem 1.25rem;margin-bottom:1rem;margin-left:1.5rem;}
+    .app-context p{font-size:.93rem;color:#3b1d6e;}
+    .app-context .app-label{font-family:var(--font-mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#7c3aed;margin-bottom:.3rem;display:block;}
+    .divider{border:none;border-top:1.5px solid var(--rule);margin:2.5rem 0;}
+    .math-display{overflow-x:auto;padding:.25rem 0;}
+    .katex-display{margin:.5rem 0!important;}
+    .bridge-card{margin-top:2.5rem;background:linear-gradient(135deg,var(--teal-900) 60%,var(--teal-700));color:var(--white);border-radius:var(--radius);padding:2rem;text-align:center;}
+    .bridge-card .bridge-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.5rem;}
+    .bridge-card h2{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:.75rem;}
+    .bridge-card p{font-size:.95rem;color:var(--teal-200);max-width:520px;margin:0 auto;}
+    .nav-footer{display:flex;justify-content:flex-end;margin-top:1.25rem;}
+    .nav-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--white);color:var(--teal-900);font-family:var(--font-body);font-weight:600;font-size:.9rem;padding:.6rem 1.4rem;border-radius:30px;text-decoration:none;}
+    .nav-btn:hover{background:var(--teal-50);}
+    .nav-btn:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .back-bar{background:var(--teal-700);padding:.6rem 1.5rem;display:flex;align-items:center;}
+.back-bar a{display:inline-flex;align-items:center;gap:.4rem;color:var(--teal-200);font-family:var(--font-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:500;}
+.back-bar a:hover{color:var(--white);}
+.back-bar a:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="back-bar" role="navigation" aria-label="Return to activity menu"><a href="index.html"><a href="#main-content" class="skip-link">Skip to main content</a>#8592; Back to Menu</a></div>
+  <header class="hero" role="banner">
+    <p class="hero-eyebrow">CalcBridge Math Academy · Unit C · Lesson C.4b Extension</p>
+    <h1>From Pythagorean Theorem<br>to the <em>Distance Formula</em></h1>
+    <p class="hero-sub">You already know the key idea — now we give it a name and a formula.</p>
+  </header>
+  <nav class="progress-trail" aria-label="Lesson sequence">
+    <div class="trail-step done"><div class="trail-icon" aria-hidden="true">✓</div><span>C.4b<br>Pythagorean<br>Theorem</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step active" aria-current="step"><div class="trail-icon" aria-hidden="true">★</div><span>Distance<br>Formula<br>(here)</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step upcoming"><div class="trail-icon" aria-hidden="true">2</div><span>Midpoint<br>Formula</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step upcoming"><div class="trail-icon" aria-hidden="true">3</div><span>Equation<br>of a Circle</span></div>
+  </nav>
+  <main id="main-content">
+    <section class="section-block" aria-labelledby="recall-heading">
+      <p class="section-label">Section 1 — Quick Recall</p>
+      <h2 id="recall-heading">What You Already Know</h2>
+      <div class="recall-card" role="note"><p>In the last lesson, you used the <strong>Pythagorean Theorem</strong> to find the distance between two points on a coordinate grid by building a right triangle and solving for the hypotenuse. This page formalizes that as a formula you can use directly.</p></div>
+      <div class="diagram-wrap" role="img" aria-label="Right triangle on coordinate grid. Point A at (1,1), Point B at (5,1), Point C at (5,4). Horizontal leg labeled delta-x equals 4, vertical leg labeled delta-y equals 3, orange hypotenuse labeled d equals question mark.">
+        <svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <defs><pattern id="g1" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0L0 0 0 36" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+          <rect width="340" height="280" fill="#f0f6f7"/><rect width="340" height="280" fill="url(#g1)"/>
+          <line x1="30" y1="250" x2="320" y2="250" stroke="#3d4a50" stroke-width="1.5"/>
+          <line x1="30" y1="10" x2="30" y2="250" stroke="#3d4a50" stroke-width="1.5"/>
+          <text x="66" y="264" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+          <text x="102" y="264" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+          <text x="138" y="264" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+          <text x="174" y="264" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+          <text x="210" y="264" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">5</text>
+          <text x="20" y="218" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+          <text x="20" y="182" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+          <text x="20" y="146" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+          <text x="20" y="110" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+          <!-- A(1,1)→(66,214) B(5,1)→(210,214) C(5,4)→(210,106) -->
+          <line x1="66" y1="214" x2="210" y2="214" stroke="#1e8a92" stroke-width="2.5"/>
+          <line x1="210" y1="214" x2="210" y2="106" stroke="#1e8a92" stroke-width="2.5"/>
+          <line x1="66" y1="214" x2="210" y2="106" stroke="#e8721c" stroke-width="3"/>
+          <rect x="196" y="200" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+          <circle cx="66" cy="214" r="5" fill="#0d3b3e"/>
+          <circle cx="210" cy="214" r="5" fill="#0d3b3e"/>
+          <circle cx="210" cy="106" r="5" fill="#0d3b3e"/>
+          <text x="44" y="232" font-family="DM Sans,sans-serif" font-size="12" fill="#0d3b3e" font-weight="600">A(1,1)</text>
+          <text x="216" y="232" font-family="DM Sans,sans-serif" font-size="12" fill="#0d3b3e" font-weight="600">B(5,1)</text>
+          <text x="216" y="104" font-family="DM Sans,sans-serif" font-size="12" fill="#0d3b3e" font-weight="600">C(5,4)</text>
+          <text x="136" y="232" font-family="DM Mono,monospace" font-size="11" fill="#145f65" text-anchor="middle">Δx=4</text>
+          <text x="228" y="164" font-family="DM Mono,monospace" font-size="11" fill="#145f65">Δy=3</text>
+          <text x="116" y="148" font-family="DM Mono,monospace" font-size="12" fill="#e8721c" font-weight="700" transform="rotate(-38,116,148)">d = ?</text>
+        </svg>
+        <p class="diagram-caption">The triangle from last time: legs of 4 and 3, hypotenuse = the distance from A to C.</p>
+      </div>
+    </section>
+    <hr class="divider" aria-hidden="true"/>
+    <section class="section-block" aria-labelledby="connection-heading">
+      <p class="section-label">Section 2 — The Connection</p>
+      <h2 id="connection-heading">The Pythagorean Theorem <em>Is</em> the Distance Formula</h2>
+      <p style="color:var(--ink-mid);margin-bottom:1.25rem;">When the legs of the right triangle are the coordinate differences <span class="math-inline" data-expr="\Delta x = x_2-x_1"></span> and <span class="math-inline" data-expr="\Delta y = y_2-y_1"></span>, substituting into the Pythagorean Theorem gives us:</p>
+      <div class="compare-grid" role="list">
+        <div class="compare-card pyth" role="listitem">
+          <h3>Pythagorean Theorem</h3>
+          <p class="math-display"><span class="math-block" data-expr="c = \sqrt{a^2+b^2}"></span></p>
+          <p>where <span class="math-inline" data-expr="a,b"></span> are the legs</p>
+        </div>
+        <div class="compare-card dist" role="listitem">
+          <h3>Distance Formula</h3>
+          <p class="math-display"><span class="math-block" data-expr="d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2}"></span></p>
+          <p>legs named with coordinates</p>
+        </div>
+      </div>
+      <div class="formula-box" role="note" aria-label="The Distance Formula">
+        <p class="formula-label">The Distance Formula</p>
+        <p class="math-display"><span class="math-block" data-expr="d = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2}"></span></p>
+      </div>
+      <p style="color:var(--ink-mid);font-size:.95rem;">These are the <strong>same idea</strong>. The formula skips the triangle-drawing and goes straight from two points to distance.</p>
+    </section>
+    <hr class="divider" aria-hidden="true"/>
+    <section class="section-block" aria-labelledby="example-heading">
+      <p class="section-label">Section 3 — Worked Example</p>
+      <h2 id="example-heading">Both Methods, Side by Side</h2>
+      <div class="worked-example" role="region" aria-label="Worked example: distance from A(1,1) to C(5,4)">
+        <div class="we-header">Example: Find the distance from A(1, 1) to C(5, 4)</div>
+        <div class="we-body">
+          <div class="diagram-wrap" role="img" aria-label="Coordinate plane. A at (1,1), C at (5,4). Orange hypotenuse labeled d equals 5. Dashed teal legs show delta-x equals 4 and delta-y equals 3.">
+            <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <defs><pattern id="g2" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0L0 0 0 36" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+              <rect width="300" height="260" fill="#f0f6f7"/><rect width="300" height="260" fill="url(#g2)"/>
+              <line x1="30" y1="230" x2="290" y2="230" stroke="#3d4a50" stroke-width="1.5"/>
+              <line x1="30" y1="10" x2="30" y2="230" stroke="#3d4a50" stroke-width="1.5"/>
+              <text x="66" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+              <text x="102" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+              <text x="138" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+              <text x="174" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+              <text x="210" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">5</text>
+              <text x="246" y="244" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">6</text>
+              <text x="20" y="194" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+              <text x="20" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+              <text x="20" y="122" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+              <text x="20" y="86" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+              <text x="20" y="50" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">5</text>
+              <!-- A(1,1)→(66,194) C(5,4)→(210,86) -->
+              <line x1="66" y1="194" x2="210" y2="194" stroke="#1e8a92" stroke-width="2" stroke-dasharray="5,3"/>
+              <line x1="210" y1="194" x2="210" y2="86" stroke="#1e8a92" stroke-width="2" stroke-dasharray="5,3"/>
+              <rect x="196" y="180" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+              <line x1="66" y1="194" x2="210" y2="86" stroke="#e8721c" stroke-width="3"/>
+              <circle cx="66" cy="194" r="6" fill="#0d3b3e"/>
+              <circle cx="210" cy="86" r="6" fill="#0d3b3e"/>
+              <text x="44" y="210" font-family="DM Sans,sans-serif" font-size="12" fill="#0d3b3e" font-weight="600">A(1,1)</text>
+              <text x="216" y="83" font-family="DM Sans,sans-serif" font-size="12" fill="#0d3b3e" font-weight="600">C(5,4)</text>
+              <text x="136" y="212" font-family="DM Mono,monospace" font-size="11" fill="#145f65" text-anchor="middle">Δx=4</text>
+              <text x="224" y="144" font-family="DM Mono,monospace" font-size="11" fill="#145f65">Δy=3</text>
+              <text x="116" y="130" font-family="DM Mono,monospace" font-size="12" fill="#e8721c" font-weight="700" transform="rotate(-38,116,130)">d = 5</text>
+            </svg>
+            <p class="diagram-caption">A(1,1) and C(5,4) plotted. The triangle is the same one you built before — the formula just automates it.</p>
+          </div>
+          <p style="font-weight:600;color:var(--teal-700);margin:.9rem 0;">Method 1 — Pythagorean Theorem (what you did before):</p>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">1</span><p class="we-step-text">Horizontal leg: <span class="math-inline" data-expr="a=5-1=4"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">2</span><p class="we-step-text">Vertical leg: <span class="math-inline" data-expr="b=4-1=3"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">3</span><p class="we-step-text"><span class="math-inline" data-expr="c=\sqrt{4^2+3^2}=\sqrt{16+9}=\sqrt{25}=5"></span></p></div>
+          <hr class="divider" style="margin:1rem 0;" aria-hidden="true"/>
+          <p style="font-weight:600;color:var(--orange);margin-bottom:.9rem;">Method 2 — Distance Formula:</p>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">1</span><p class="we-step-text">Label: <span class="math-inline" data-expr="(x_1,y_1)=(1,1)"></span> and <span class="math-inline" data-expr="(x_2,y_2)=(5,4)"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">2</span><p class="we-step-text">Substitute: <span class="math-inline" data-expr="d=\sqrt{(5-1)^2+(4-1)^2}"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">3</span><p class="we-step-text">Simplify: <span class="math-inline" data-expr="d=\sqrt{16+9}=\sqrt{25}=5"></span></p></div>
+          <p style="margin-top:1rem;font-size:.9rem;color:var(--ink-light);">✓ Same answer — same idea, different notation.</p>
+        </div>
+      </div>
+    </section>
+    <hr class="divider" aria-hidden="true"/>
+    <section class="section-block" aria-labelledby="practice-heading">
+      <p class="section-label">Section 4 — Practice</p>
+      <h2 id="practice-heading">Find the Distance</h2>
+      <p style="color:var(--ink-mid);margin-bottom:1.5rem;font-size:.97rem;">Use the Distance Formula for each problem. Show your substitution step. Visualize the points first, then reveal the graph to check.</p>
+      <ol class="problem-set" aria-label="Practice problems">
+
+        <li class="problem-item">
+          <span class="problem-tag tag-basic">Basic</span>
+          <p class="problem-text">Find the distance between <span class="math-inline" data-expr="P(0,0)"></span> and <span class="math-inline" data-expr="Q(3,4)"></span>.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="graph1" onclick="togglePanel(this,'graph1')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="ans1" onclick="togglePanel(this,'ans1')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="graph1" class="graph-panel" role="region" aria-label="Graph for problem 1: P at origin, Q at (3,4), orange line of length 5 connecting them.">
+            <div class="diagram-wrap">
+              <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gp1" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0L0 0 0 36" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="240" height="220" fill="#f0f6f7"/><rect width="240" height="220" fill="url(#gp1)"/>
+                <line x1="24" y1="196" x2="230" y2="196" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="24" y1="10" x2="24" y2="196" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="60" y="210" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="96" y="210" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="132" y="210" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="168" y="210" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="14" y="160" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="14" y="124" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="14" y="88" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="14" y="52" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+                <!-- P(0,0)→(24,196) Q(3,4)→(132,52) -->
+                <line x1="24" y1="196" x2="132" y2="196" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="132" y1="196" x2="132" y2="52" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <rect x="118" y="182" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+                <line x1="24" y1="196" x2="132" y2="52" stroke="#e8721c" stroke-width="3"/>
+                <circle cx="24" cy="196" r="5" fill="#0d3b3e"/>
+                <circle cx="132" cy="52" r="5" fill="#0d3b3e"/>
+                <text x="4" y="212" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">P</text>
+                <text x="138" y="48" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">Q(3,4)</text>
+                <text x="56" y="115" font-family="DM Mono,monospace" font-size="11" fill="#e8721c" font-weight="700" transform="rotate(-54,56,115)">d=5</text>
+              </svg>
+            </div>
+          </div>
+          <div id="ans1" class="answer-panel" role="region" aria-label="Answer to problem 1">
+            <p><span class="math-inline" data-expr="d=\sqrt{(3-0)^2+(4-0)^2}=\sqrt{9+16}=\sqrt{25}=5"></span></p>
+            <p>Classic 3-4-5 right triangle!</p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-basic">Basic</span>
+          <p class="problem-text">Find the distance between <span class="math-inline" data-expr="A(2,1)"></span> and <span class="math-inline" data-expr="B(6,4)"></span>.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="graph2" onclick="togglePanel(this,'graph2')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="ans2" onclick="togglePanel(this,'ans2')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="graph2" class="graph-panel" role="region" aria-label="Graph for problem 2: A at (2,1), B at (6,4), orange line of length 5.">
+            <div class="diagram-wrap">
+              <svg viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gp2" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0L0 0 0 36" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="280" height="240" fill="#f0f6f7"/><rect width="280" height="240" fill="url(#gp2)"/>
+                <line x1="24" y1="212" x2="270" y2="212" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="24" y1="10" x2="24" y2="212" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="60" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="96" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="132" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="168" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="204" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="240" y="226" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">6</text>
+                <text x="14" y="176" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="14" y="140" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="14" y="104" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="14" y="68" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">4</text>
+                <!-- A(2,1)→(96,176) B(6,4)→(240,68) -->
+                <line x1="96" y1="176" x2="240" y2="176" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="240" y1="176" x2="240" y2="68" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <rect x="226" y="162" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+                <line x1="96" y1="176" x2="240" y2="68" stroke="#e8721c" stroke-width="3"/>
+                <circle cx="96" cy="176" r="5" fill="#0d3b3e"/>
+                <circle cx="240" cy="68" r="5" fill="#0d3b3e"/>
+                <text x="72" y="192" font-family="DM Sans,sans-serif" font-size="11" fill="#0d3b3e" font-weight="600">A(2,1)</text>
+                <text x="246" y="65" font-family="DM Sans,sans-serif" font-size="11" fill="#0d3b3e" font-weight="600">B(6,4)</text>
+                <text x="150" y="108" font-family="DM Mono,monospace" font-size="11" fill="#e8721c" font-weight="700" transform="rotate(-37,150,108)">d=5</text>
+              </svg>
+            </div>
+          </div>
+          <div id="ans2" class="answer-panel" role="region" aria-label="Answer to problem 2">
+            <p><span class="math-inline" data-expr="d=\sqrt{(6-2)^2+(4-1)^2}=\sqrt{16+9}=\sqrt{25}=5"></span></p>
+            <p>Different location, same Δx and Δy as Problem 1 — same distance, just shifted on the grid.</p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-medium">With Negatives</span>
+          <p class="problem-text">Find the distance between <span class="math-inline" data-expr="M(-3,2)"></span> and <span class="math-inline" data-expr="N(1,-1)"></span>.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="graph3" onclick="togglePanel(this,'graph3')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="ans3" onclick="togglePanel(this,'ans3')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="graph3" class="graph-panel" role="region" aria-label="Graph for problem 3: M at (-3,2) in second quadrant, N at (1,-1) in fourth quadrant, orange line of length 5.">
+            <div class="diagram-wrap">
+              <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gp3" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0L0 0 0 36" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="300" height="260" fill="#f0f6f7"/><rect width="300" height="260" fill="url(#gp3)"/>
+                <!-- origin at (150,144) -->
+                <line x1="14" y1="144" x2="290" y2="144" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="150" y1="10" x2="150" y2="254" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="186" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="222" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="114" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">-1</text>
+                <text x="78" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">-2</text>
+                <text x="42" y="158" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84" text-anchor="middle">-3</text>
+                <text x="162" y="110" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84">1</text>
+                <text x="162" y="74" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84">2</text>
+                <text x="156" y="182" font-family="DM Mono,monospace" font-size="10" fill="#6b7c84">-1</text>
+                <!-- M(-3,2)→(42,108) N(1,-1)→(186,180) -->
+                <line x1="42" y1="108" x2="186" y2="108" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="186" y1="108" x2="186" y2="180" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <rect x="172" y="108" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+                <line x1="42" y1="108" x2="186" y2="180" stroke="#e8721c" stroke-width="3"/>
+                <circle cx="42" cy="108" r="5" fill="#0d3b3e"/>
+                <circle cx="186" cy="180" r="5" fill="#0d3b3e"/>
+                <text x="4" y="104" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">M(-3,2)</text>
+                <text x="192" y="196" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">N(1,-1)</text>
+                <text x="96" y="130" font-family="DM Mono,monospace" font-size="11" fill="#e8721c" font-weight="700" transform="rotate(27,96,130)">d=5</text>
+              </svg>
+            </div>
+          </div>
+          <div id="ans3" class="answer-panel" role="region" aria-label="Answer to problem 3">
+            <p><span class="math-inline" data-expr="d=\sqrt{(1-(-3))^2+(-1-2)^2}=\sqrt{4^2+(-3)^2}=\sqrt{16+9}=\sqrt{25}=5"></span></p>
+            <p>Key detail: squaring removes the negative. <span class="math-inline" data-expr="(-3)^2=9"></span>, never <span class="math-inline" data-expr="-9"></span>.</p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-medium">With Negatives</span>
+          <p class="problem-text">Find the distance between <span class="math-inline" data-expr="P(-2,-5)"></span> and <span class="math-inline" data-expr="Q(4,3)"></span>. Simplify completely.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="graph4" onclick="togglePanel(this,'graph4')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="ans4" onclick="togglePanel(this,'ans4')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="graph4" class="graph-panel" role="region" aria-label="Graph for problem 4: P at (-2,-5) in third quadrant, Q at (4,3) in first quadrant, orange line of length 10.">
+            <div class="diagram-wrap">
+              <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gp4" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0L0 0 0 28" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="300" height="300" fill="#f0f6f7"/><rect width="300" height="300" fill="url(#gp4)"/>
+                <!-- origin at (100,216): x: -2→44 4→268; y: -5→356(off) -->
+                <!-- step=28, origin at (100,252): P(-2,-5)→(44,392)still off -->
+                <!-- step=24, range x[-3,5]=8, y[-6,4]=10; w=300 h=300 margin=30 -->
+                <!-- stepX=(300-60)/8=30 stepY=(300-60)/10=24 -->
+                <!-- originX=30+3*30=120 originY=30+6*24=174 -->
+                <!-- P(-2,-5): px=120+(-2*30)=60, py=174+(5*24)=294 -->
+                <!-- Q(4,3): px=120+(4*30)=240, py=174+(-3*24)=102 -->
+                <line x1="20" y1="174" x2="285" y2="174" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="120" y1="10" x2="120" y2="285" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="150" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="180" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="210" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="240" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="90" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-1</text>
+                <text x="60" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-2</text>
+                <text x="132" y="152" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">1</text>
+                <text x="132" y="128" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">2</text>
+                <text x="132" y="104" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">3</text>
+                <text x="126" y="200" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-1</text>
+                <text x="126" y="224" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-2</text>
+                <text x="126" y="248" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-3</text>
+                <text x="126" y="272" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-4</text>
+                <!-- P(60,294) Q(240,102) -->
+                <line x1="60" y1="294" x2="240" y2="294" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="240" y1="294" x2="240" y2="102" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <rect x="226" y="280" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+                <line x1="60" y1="294" x2="240" y2="102" stroke="#e8721c" stroke-width="3"/>
+                <circle cx="60" cy="294" r="5" fill="#0d3b3e"/>
+                <circle cx="240" cy="102" r="5" fill="#0d3b3e"/>
+                <text x="4" y="292" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">P(-2,-5)</text>
+                <text x="246" y="100" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">Q(4,3)</text>
+                <text x="130" y="186" font-family="DM Mono,monospace" font-size="11" fill="#e8721c" font-weight="700" transform="rotate(-47,130,186)">d=10</text>
+              </svg>
+            </div>
+          </div>
+          <div id="ans4" class="answer-panel" role="region" aria-label="Answer to problem 4">
+            <p><span class="math-inline" data-expr="d=\sqrt{(4-(-2))^2+(3-(-5))^2}=\sqrt{36+64}=\sqrt{100}=10"></span></p>
+            <p>A 6-8-10 right triangle — another Pythagorean triple.</p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-applied">Real-World Application</span>
+          <div class="app-context">
+            <span class="app-label">⚙️ Civil Engineering — Survey Problem</span>
+            <p>A survey team needs the straight-line distance between two GPS markers on opposite banks of a river. They cannot walk directly between them. Using GPS coordinates (in units of 100 meters), they plot <strong>Station A at (1, 2)</strong> and <strong>Station B at (7, 10)</strong> on a coordinate grid. From there, they walk the right-angle legs and apply the formula to compute the uncrossable span.</p>
+          </div>
+          <p class="problem-text">Find the direct distance between Station A and Station B. Express your answer in grid units, then interpret what that means in meters.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="graph5" onclick="togglePanel(this,'graph5')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="ans5" onclick="togglePanel(this,'ans5')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="graph5" class="graph-panel" role="region" aria-label="Surveyor map. Station A at (1,2) on left riverbank, Station B at (7,10) on right bank. Dashed orange line shows the unmeasurable span labeled d equals 10. Teal dashed legs show delta-x equals 6 and delta-y equals 8. A river band runs diagonally between the two stations.">
+            <div class="diagram-wrap">
+              <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs>
+                  <pattern id="gp5" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0L0 0 0 28" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern>
+                  <linearGradient id="rv" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#93c5fd" stop-opacity=".55"/><stop offset="100%" stop-color="#60a5fa" stop-opacity=".3"/></linearGradient>
+                </defs>
+                <rect width="320" height="300" fill="#f0f6f7"/><rect width="320" height="300" fill="url(#gp5)"/>
+                <!-- River: diagonal band between the two station lines -->
+                <polygon points="90,0 148,0 232,300 174,300" fill="url(#rv)"/>
+                <text x="130" y="148" font-family="DM Sans,sans-serif" font-size="10" fill="#2563eb" font-style="italic" transform="rotate(66,130,148)">river</text>
+                <!-- origin at (28,272) step=28; range x[0,10] y[0,11] -->
+                <line x1="28" y1="272" x2="308" y2="272" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="28" y1="10" x2="28" y2="272" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="56" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="84" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="112" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="140" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="168" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="196" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">6</text>
+                <text x="224" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">7</text>
+                <text x="252" y="286" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">8</text>
+                <text x="18" y="244" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="18" y="216" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="18" y="188" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="18" y="160" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="18" y="132" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="18" y="104" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">6</text>
+                <text x="18" y="76" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">7</text>
+                <text x="18" y="48" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">8</text>
+                <text x="18" y="20" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">9</text>
+                <!-- A(1,2)→(56,216) B(7,10)→(224,16) -->
+                <line x1="56" y1="216" x2="224" y2="216" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="224" y1="216" x2="224" y2="16" stroke="#1e8a92" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <rect x="210" y="202" width="14" height="14" fill="none" stroke="#1e8a92" stroke-width="1.5"/>
+                <line x1="56" y1="216" x2="224" y2="16" stroke="#e8721c" stroke-width="3" stroke-dasharray="8,4"/>
+                <circle cx="56" cy="216" r="7" fill="#7c3aed"/>
+                <circle cx="224" cy="16" r="7" fill="#7c3aed"/>
+                <text x="4" y="212" font-family="DM Sans,sans-serif" font-size="10" fill="#4a2080" font-weight="700">Stn A</text>
+                <text x="230" y="14" font-family="DM Sans,sans-serif" font-size="10" fill="#4a2080" font-weight="700">Stn B</text>
+                <text x="136" y="234" font-family="DM Mono,monospace" font-size="9" fill="#145f65" text-anchor="middle">Δx=6</text>
+                <text x="238" y="120" font-family="DM Mono,monospace" font-size="9" fill="#145f65">Δy=8</text>
+                <text x="108" y="100" font-family="DM Mono,monospace" font-size="11" fill="#e8721c" font-weight="700" transform="rotate(-50,108,100)">d=10</text>
+              </svg>
+              <p class="diagram-caption">Dashed orange = the span they can't walk. Teal dashes = the legs they <em>can</em> measure on land.</p>
+            </div>
+          </div>
+          <div id="ans5" class="answer-panel" role="region" aria-label="Answer to surveyor problem">
+            <p><span class="math-inline" data-expr="d=\sqrt{(7-1)^2+(10-2)^2}=\sqrt{36+64}=\sqrt{100}=10"></span> grid units</p>
+            <p>Since each unit = 100 meters, the river span is <strong>1,000 m (1 km)</strong>. This is exactly how field surveyors compute uncrossable distances — GPS data gives the coordinates, the distance formula gives the span.</p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+
+    <section class="bridge-card" aria-labelledby="bridge-heading">
+      <p class="bridge-eyebrow">Coming Up Next</p>
+      <h2 id="bridge-heading">A Quick Detour Worth Taking</h2>
+      <p>Before writing the equation of a circle, we need one more tool: a way to find the exact center between two known points. That's the Midpoint Formula — and it connects directly to finding the center of a circle.</p>
+      <div class="nav-footer">
+        <a href="c4b-midpoint-formula.html" class="nav-btn" aria-label="Next lesson: Midpoint Formula">Next: Midpoint Formula →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script>
+    (function(){
+      document.querySelectorAll('.math-inline').forEach(function(el){try{katex.render(el.dataset.expr,el,{throwOnError:false,displayMode:false});}catch(e){el.textContent=el.dataset.expr;}});
+      document.querySelectorAll('.math-block').forEach(function(el){try{katex.render(el.dataset.expr,el,{throwOnError:false,displayMode:true});}catch(e){el.textContent=el.dataset.expr;}});
+    })();
+    function togglePanel(btn,id){
+      var p=document.getElementById(id);
+      var open=p.classList.contains('open');
+      p.classList.toggle('open',!open);
+      btn.setAttribute('aria-expanded',String(!open));
+      var isG=btn.classList.contains('graph-toggle');
+      var t=btn.childNodes[btn.childNodes.length-1];
+      if(t&&t.nodeType===3) t.textContent=open?(isG?' Show Graph':' Show Answer'):(isG?' Hide Graph':' Hide Answer');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Midpoint Formula | CalcBridge Math Academy</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--teal-900:#0d3b3e;--teal-700:#145f65;--teal-500:#1e8a92;--teal-200:#a8dde0;--teal-50:#eef8f9;--orange:#e8721c;--orange-light:#fdebd7;--ink:#1a1f22;--ink-mid:#3d4a50;--ink-light:#6b7c84;--rule:#cdd9dc;--white:#ffffff;--grid-bg:#f0f6f7;--font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono','Courier New',monospace;--radius:8px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:var(--font-body);font-size:1rem;line-height:1.65;color:var(--ink);background:var(--white);}
+    .skip-link{position:absolute;top:-999px;left:0;background:var(--orange);color:var(--white);padding:.5rem 1rem;font-weight:600;z-index:999;border-radius:0 0 var(--radius) 0;}
+    .skip-link:focus{top:0;}
+    main{max-width:860px;margin:0 auto;padding:0 1.5rem 4rem;}
+    .hero{background:var(--teal-900);color:var(--white);padding:2.5rem 1.5rem 2rem;text-align:center;}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.6rem;}
+    .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.2;color:var(--white);}
+    .hero h1 em{font-style:italic;color:var(--teal-200);}
+    .hero-sub{margin-top:.75rem;font-size:.95rem;color:var(--teal-200);max-width:540px;margin-left:auto;margin-right:auto;}
+    .progress-trail{display:flex;align-items:center;justify-content:center;padding:1.25rem 1rem;background:var(--teal-50);border-bottom:2px solid var(--teal-200);flex-wrap:wrap;}
+    .trail-step{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.72rem;font-family:var(--font-mono);color:var(--ink-light);padding:0 .5rem;}
+    .trail-step.done .trail-icon{background:var(--teal-500);color:var(--white);}
+    .trail-step.active .trail-icon{background:var(--orange);color:var(--white);box-shadow:0 0 0 3px var(--orange-light);}
+    .trail-step.upcoming .trail-icon{background:var(--rule);color:var(--ink-light);}
+    .trail-icon{width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;margin-bottom:.35rem;}
+    .trail-connector{width:2.5rem;height:2px;background:var(--rule);margin-bottom:1.1rem;flex-shrink:0;}
+    .trail-step.done+.trail-connector{background:var(--teal-500);}
+    .section-block{margin-top:2.5rem;}
+    .section-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-500);margin-bottom:.4rem;}
+    .section-block h2{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--teal-900);line-height:1.25;margin-bottom:1rem;}
+    .recall-card{background:var(--teal-50);border-left:4px solid var(--teal-500);border-radius:0 var(--radius) var(--radius) 0;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+    .recall-card p{color:var(--ink-mid);font-size:.97rem;}
+    .insight-box{background:#f5f0fc;border-left:4px solid #7c3aed;border-radius:0 var(--radius) var(--radius) 0;padding:1.25rem 1.5rem;margin:1.25rem 0;}
+    .insight-box p{color:#3b1d6e;font-size:.97rem;}
+    .insight-box .insight-label{font-family:var(--font-mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#7c3aed;margin-bottom:.3rem;display:block;}
+    .diagram-wrap{background:var(--grid-bg);border:1px solid var(--rule);border-radius:var(--radius);padding:1rem;text-align:center;margin:.75rem 0;overflow:hidden;}
+    .diagram-wrap svg{max-width:100%;height:auto;}
+    .diagram-caption{font-size:.82rem;color:var(--ink-light);margin-top:.6rem;font-style:italic;}
+    .formula-box{background:var(--teal-900);color:var(--white);border-radius:var(--radius);padding:1.5rem 2rem;text-align:center;margin:1.5rem 0;}
+    .formula-box .formula-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.5rem;}
+    .mnemonic-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0;}
+    @media(max-width:560px){.mnemonic-grid{grid-template-columns:1fr;}}
+    .mnemonic-card{border-radius:var(--radius);padding:1.1rem;border:1.5px solid var(--rule);text-align:center;}
+    .mnemonic-card.sub{background:var(--teal-50);border-color:var(--teal-200);}
+    .mnemonic-card.add{background:var(--orange-light);border-color:#f0b080;}
+    .mnemonic-card h3{font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;}
+    .mnemonic-card.sub h3{color:var(--teal-700);}
+    .mnemonic-card.add h3{color:var(--orange);}
+    .mnemonic-card p{font-size:.88rem;color:var(--ink-mid);}
+    .worked-example{border:1.5px solid var(--rule);border-radius:var(--radius);overflow:hidden;margin:1.5rem 0;}
+    .we-header{background:var(--teal-700);color:var(--white);padding:.75rem 1.25rem;font-family:var(--font-mono);font-size:.82rem;letter-spacing:.06em;}
+    .we-body{padding:1.25rem;}
+    .we-body>p{margin-bottom:.6rem;color:var(--ink-mid);font-size:.95rem;}
+    .we-step{display:flex;gap:1rem;align-items:flex-start;margin-bottom:.85rem;}
+    .we-step-num{flex-shrink:0;width:1.6rem;height:1.6rem;background:var(--teal-500);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;margin-top:.15rem;}
+    .we-step-text{font-size:.95rem;color:var(--ink-mid);}
+    .problem-set{counter-reset:problem;list-style:none;padding:0;}
+    .problem-item{counter-increment:problem;border:1.5px solid var(--rule);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;position:relative;}
+    .problem-item::before{content:counter(problem);position:absolute;top:1rem;left:-1px;background:var(--teal-700);color:var(--white);font-family:var(--font-mono);font-size:.78rem;font-weight:600;padding:.15rem .55rem;border-radius:0 var(--radius) var(--radius) 0;}
+    .problem-text{padding-left:1.5rem;font-size:.97rem;color:var(--ink);margin-bottom:.85rem;}
+    .problem-tag{display:inline-block;font-family:var(--font-mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.1rem .5rem;border-radius:20px;margin-left:1.5rem;margin-bottom:.75rem;}
+    .tag-basic{background:#dff0d8;color:#1e5c14;}
+    .tag-medium{background:#fff3cd;color:#6b4c00;}
+    .tag-stretch{background:#fde8e8;color:#7a1515;}
+    .toggle-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-left:1.5rem;}
+    .answer-toggle,.graph-toggle{display:inline-flex;align-items:center;gap:.4rem;background:none;font-family:var(--font-body);font-size:.85rem;font-weight:600;padding:.35rem .9rem;border-radius:20px;cursor:pointer;transition:background .15s;}
+    .answer-toggle{border:1.5px solid var(--teal-500);color:var(--teal-700);}
+    .answer-toggle:hover{background:var(--teal-50);}
+    .graph-toggle{border:1.5px solid var(--orange);color:var(--orange);}
+    .graph-toggle:hover{background:var(--orange-light);}
+    .answer-toggle:focus-visible,.graph-toggle:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .answer-panel{display:none;margin:.75rem 1.5rem 0;padding:1rem 1.25rem;background:var(--teal-50);border-left:3px solid var(--teal-500);border-radius:0 var(--radius) var(--radius) 0;font-size:.93rem;color:var(--ink-mid);}
+    .answer-panel.open{display:block;}
+    .answer-panel p+p{margin-top:.5rem;}
+    .graph-panel{display:none;margin:.75rem 1.5rem 0;}
+    .graph-panel.open{display:block;}
+    .divider{border:none;border-top:1.5px solid var(--rule);margin:2.5rem 0;}
+    .math-display{overflow-x:auto;padding:.25rem 0;}
+    .katex-display{margin:.5rem 0!important;}
+    .nav-bar{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:var(--teal-50);border-bottom:1px solid var(--teal-200);}
+    .nav-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--teal-700);font-family:var(--font-body);font-weight:600;font-size:.88rem;text-decoration:none;}
+    .nav-link:hover{color:var(--teal-500);}
+    .nav-link:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .bridge-card{margin-top:2.5rem;background:linear-gradient(135deg,var(--teal-900) 60%,var(--teal-700));color:var(--white);border-radius:var(--radius);padding:2rem;text-align:center;}
+    .bridge-card .bridge-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-200);margin-bottom:.5rem;}
+    .bridge-card h2{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:.75rem;}
+    .bridge-card p{font-size:.95rem;color:var(--teal-200);max-width:520px;margin:0 auto;}
+    .nav-footer{display:flex;justify-content:flex-end;margin-top:1.25rem;}
+    .nav-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--white);color:var(--teal-900);font-family:var(--font-body);font-weight:600;font-size:.9rem;padding:.6rem 1.4rem;border-radius:30px;text-decoration:none;}
+    .nav-btn:hover{background:var(--teal-50);}
+    .nav-btn:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+    .back-bar{background:var(--teal-700);padding:.6rem 1.5rem;display:flex;align-items:center;}
+.back-bar a{display:inline-flex;align-items:center;gap:.4rem;color:var(--teal-200);font-family:var(--font-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;font-weight:500;}
+.back-bar a:hover{color:var(--white);}
+.back-bar a:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;}}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="back-bar" role="navigation" aria-label="Return to activity menu"><a href="index.html"><a href="#main-content" class="skip-link">Skip to main content</a>#8592; Back to Menu</a></div>
+
+  <header class="hero" role="banner">
+    <p class="hero-eyebrow">CalcBridge Math Academy · Unit C · Detour</p>
+    <h1>The <em>Midpoint Formula</em></h1>
+    <p class="hero-sub">Find the exact center between two points — a tool you'll need to locate the center of a circle.</p>
+  </header>
+
+
+  <nav class="progress-trail" aria-label="Lesson sequence">
+    <div class="trail-step done"><div class="trail-icon" aria-hidden="true">✓</div><span>C.4b<br>Pythagorean<br>Theorem</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step done"><div class="trail-icon" aria-hidden="true">✓</div><span>Distance<br>Formula</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step active" aria-current="step"><div class="trail-icon" aria-hidden="true">★</div><span>Midpoint<br>Formula<br>(here)</span></div>
+    <div class="trail-connector" aria-hidden="true"></div>
+    <div class="trail-step upcoming"><div class="trail-icon" aria-hidden="true">3</div><span>Equation<br>of a Circle</span></div>
+  </nav>
+
+  <main id="main-content">
+
+    <section class="section-block" aria-labelledby="recall-heading">
+      <p class="section-label">Section 1 — Why This Matters</p>
+      <h2 id="recall-heading">Finding the Center</h2>
+      <div class="recall-card" role="note">
+        <p>You now know how to find the <strong>distance</strong> between two points. But sometimes the question isn't how far apart two points are — it's <em>where is the exact middle?</em> That's what the Midpoint Formula gives you.</p>
+      </div>
+      <div class="insight-box" role="note">
+        <span class="insight-label">🔵 Why you need this for circles</span>
+        <p>If you're given the two endpoints of a <strong>diameter</strong> of a circle, the center is the midpoint of that diameter. Without the midpoint formula, you can't write the equation of the circle. That connection is coming up next.</p>
+      </div>
+    </section>
+
+    <hr class="divider" aria-hidden="true"/>
+
+    <section class="section-block" aria-labelledby="formula-heading">
+      <p class="section-label">Section 2 — The Formula</p>
+      <h2 id="formula-heading">Average the Coordinates</h2>
+      <p style="color:var(--ink-mid);margin-bottom:1.25rem;">To find the midpoint of a segment, find the <strong>average</strong> of the x-coordinates and the average of the y-coordinates of the two endpoints.</p>
+      <div class="formula-box" role="note" aria-label="The Midpoint Formula">
+        <p class="formula-label">The Midpoint Formula</p>
+        <p class="math-display"><span class="math-block" data-expr="M = \left(\frac{x_1+x_2}{2},\; \frac{y_1+y_2}{2}\right)"></span></p>
+      </div>
+
+      <div class="mnemonic-grid" role="list" aria-label="Memory aid: subtract vs add">
+        <div class="mnemonic-card sub" role="listitem">
+          <h3>Distance Formula</h3>
+          <p class="math-display"><span class="math-block" data-expr="\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}"></span></p>
+          <p><strong>Subtract</strong> the coordinates</p>
+        </div>
+        <div class="mnemonic-card add" role="listitem">
+          <h3>Midpoint Formula</h3>
+          <p class="math-display"><span class="math-block" data-expr="\left(\frac{x_1+x_2}{2},\frac{y_1+y_2}{2}\right)"></span></p>
+          <p><strong>Add</strong> the coordinates, then halve</p>
+        </div>
+      </div>
+      <p style="color:var(--ink-mid);font-size:.9rem;margin-top:.5rem;">Easy memory trick: <em>Distance</em> → subtract. <em>Midpoint</em> → add (then divide by 2).</p>
+    </section>
+
+    <hr class="divider" aria-hidden="true"/>
+
+    <section class="section-block" aria-labelledby="example-heading">
+      <p class="section-label">Section 3 — Worked Example</p>
+      <h2 id="example-heading">Finding the Midpoint, Step by Step</h2>
+
+      <div class="worked-example" role="region" aria-label="Worked example: midpoint of (-5,-4) and (7,2)">
+        <div class="we-header">Example: Find the midpoint of the segment with endpoints (−5, −4) and (7, 2)</div>
+        <div class="we-body">
+          <div class="diagram-wrap" role="img" aria-label="Coordinate plane showing endpoints at (-5,-4) and (7,2) connected by a line segment. The midpoint at (1,-1) is marked in orange at the center of the segment.">
+            <svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <defs><pattern id="gm1" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+              <rect width="360" height="300" fill="#f0f6f7"/><rect width="360" height="300" fill="url(#gm1)"/>
+              <!-- origin at (195,195): x range[-6,8] step=30; y range[-5,3] step=30 -->
+              <!-- originX=30+6*30=210 originY=30+5*30=180 -->
+              <line x1="20" y1="180" x2="345" y2="180" stroke="#3d4a50" stroke-width="1.5"/>
+              <line x1="210" y1="10" x2="210" y2="290" stroke="#3d4a50" stroke-width="1.5"/>
+              <!-- x axis labels -->
+              <text x="180" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-1</text>
+              <text x="150" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-2</text>
+              <text x="120" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-3</text>
+              <text x="90" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-4</text>
+              <text x="60" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-5</text>
+              <text x="240" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+              <text x="270" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+              <text x="300" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+              <text x="330" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+              <!-- y axis labels -->
+              <text x="222" y="152" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">1</text>
+              <text x="222" y="122" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">2</text>
+              <text x="222" y="92" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">3</text>
+              <text x="216" y="212" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-1</text>
+              <text x="216" y="242" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-2</text>
+              <text x="216" y="272" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-3</text>
+              <!-- A(-5,-4): px=210+(-5*30)=60, py=180+(4*30)=300→clip to 290; use 288 -->
+              <!-- B(7,2): px=210+(7*30)=420→clip; step too big. Use step=24 -->
+              <!-- step=24: originX=30+6*24=174; originY=30+5*24=150 -->
+              <!-- A(-5,-4): px=174-5*24=54, py=150+4*24=246 -->
+              <!-- B(7,2): px=174+7*24=342, py=150-2*24=102 -->
+              <!-- M(1,-1): px=174+1*24=198, py=150+1*24=174 -->
+              <!-- redo axes with step=24, originX=174 originY=150 -->
+              <!-- recompute. Let's just hardcode from good values: -->
+              <!-- step=26: originX=30+6*26=186, originY=30+5*26=160 -->
+              <!-- A(-5,-4): px=186-130=56, py=160+104=264 -->
+              <!-- B(7,2): px=186+182=368 - too wide -->
+              <!-- step=22: originX=30+6*22=162, originY=30+5*22=140 -->
+              <!-- A(-5,-4): px=162-110=52, py=140+88=228 -->
+              <!-- B(7,2): px=162+154=316, py=140-44=96 -->
+              <!-- M(1,-1): px=162+22=184, py=140+22=162 -->
+              <!-- Use these coords, reposition axes. Erase old and rewrite: -->
+              <!-- Actually all above axes are wrong since I shifted. Let me just draw it correctly. -->
+              <!-- Use viewBox 360x300, step=22, origin=(162,140) -->
+              <!-- Overwrite axes - I'll draw the whole thing here directly -->
+              <line x1="20" y1="140" x2="345" y2="140" stroke="#3d4a50" stroke-width="1.5"/>
+              <line x1="162" y1="10" x2="162" y2="290" stroke="#3d4a50" stroke-width="1.5"/>
+              <!-- x labels step=22 from origin 162 -->
+              <text x="184" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+              <text x="206" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+              <text x="228" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+              <text x="250" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+              <text x="272" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+              <text x="294" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">6</text>
+              <text x="316" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">7</text>
+              <text x="140" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-1</text>
+              <text x="118" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-2</text>
+              <text x="96" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-3</text>
+              <text x="74" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-4</text>
+              <text x="52" y="154" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-5</text>
+              <!-- y labels -->
+              <text x="172" y="120" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">1</text>
+              <text x="172" y="98" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">2</text>
+              <text x="166" y="164" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-1</text>
+              <text x="166" y="186" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-2</text>
+              <text x="166" y="208" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-3</text>
+              <text x="166" y="230" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-4</text>
+              <!-- A(-5,-4): px=52,py=228 B(7,2): px=316,py=96 M(1,-1): px=184,py=162 -->
+              <line x1="52" y1="228" x2="316" y2="96" stroke="#1e8a92" stroke-width="2.5"/>
+              <circle cx="52" cy="228" r="6" fill="#0d3b3e"/>
+              <circle cx="316" cy="96" r="6" fill="#0d3b3e"/>
+              <circle cx="184" cy="162" r="7" fill="#e8721c"/>
+              <text x="4" y="242" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(-5,-4)</text>
+              <text x="320" y="93" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(7,2)</text>
+              <text x="190" y="156" font-family="DM Sans,sans-serif" font-size="10" fill="#e8721c" font-weight="700">M(1,-1)</text>
+            </svg>
+            <p class="diagram-caption">The midpoint M(1,−1) lands exactly halfway along the segment. The orange dot marks the center.</p>
+          </div>
+
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">1</span><p class="we-step-text">Label the points: <span class="math-inline" data-expr="(x_1,y_1)=(-5,-4)"></span> and <span class="math-inline" data-expr="(x_2,y_2)=(7,2)"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">2</span><p class="we-step-text">Apply the formula: <span class="math-inline" data-expr="M=\left(\dfrac{-5+7}{2},\dfrac{-4+2}{2}\right)"></span></p></div>
+          <div class="we-step"><span class="we-step-num" aria-hidden="true">3</span><p class="we-step-text">Simplify: <span class="math-inline" data-expr="M=\left(\dfrac{2}{2},\dfrac{-2}{2}\right)=(1,-1)"></span></p></div>
+          <p style="margin-top:.75rem;font-size:.9rem;color:var(--ink-light);">✓ The midpoint is (1, −1). Notice it lies right on the segment between the two endpoints.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" aria-hidden="true"/>
+
+    <section class="section-block" aria-labelledby="practice-heading">
+      <p class="section-label">Section 4 — Practice</p>
+      <h2 id="practice-heading">Find the Midpoint</h2>
+      <p style="color:var(--ink-mid);margin-bottom:1.5rem;font-size:.97rem;">Use the Midpoint Formula for each. Visualize where the center should be, then reveal the graph to confirm.</p>
+      <ol class="problem-set" aria-label="Midpoint practice problems">
+
+        <li class="problem-item">
+          <span class="problem-tag tag-basic">Basic</span>
+          <p class="problem-text">Find the midpoint of the segment with endpoints <span class="math-inline" data-expr="(2,4)"></span> and <span class="math-inline" data-expr="(8,10)"></span>.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="mgraph1" onclick="togglePanel(this,'mgraph1')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="mans1" onclick="togglePanel(this,'mans1')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="mgraph1" class="graph-panel" role="region" aria-label="Graph for midpoint problem 1">
+            <div class="diagram-wrap" role="img" aria-label="Segment from (2,4) to (8,10). Midpoint at (5,7) marked in orange.">
+              <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gmp1" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0L0 0 0 26" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="300" height="280" fill="#f0f6f7"/><rect width="300" height="280" fill="url(#gmp1)"/>
+                <line x1="24" y1="254" x2="286" y2="254" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="24" y1="10" x2="24" y2="254" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="50" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="76" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="102" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="128" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="154" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="180" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">6</text>
+                <text x="206" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">7</text>
+                <text x="232" y="268" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">8</text>
+                <text x="14" y="228" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="14" y="202" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="14" y="176" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="14" y="150" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="14" y="124" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="14" y="98" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">6</text>
+                <text x="14" y="72" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">7</text>
+                <text x="14" y="46" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">8</text>
+                <text x="14" y="20" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">9</text>
+                <!-- (2,4)→(76,150) (8,10)→(232,20) M(5,7)→(154,72) step=26 -->
+                <line x1="76" y1="150" x2="232" y2="20" stroke="#1e8a92" stroke-width="2.5"/>
+                <circle cx="76" cy="150" r="5" fill="#0d3b3e"/>
+                <circle cx="232" cy="20" r="5" fill="#0d3b3e"/>
+                <circle cx="154" cy="85" r="7" fill="#e8721c"/>
+                <text x="36" y="162" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(2,4)</text>
+                <text x="238" y="18" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(8,10)</text>
+                <text x="160" y="80" font-family="DM Sans,sans-serif" font-size="10" fill="#e8721c" font-weight="700">M(5,7)</text>
+              </svg>
+            </div>
+          </div>
+          <div id="mans1" class="answer-panel" role="region" aria-label="Answer to midpoint problem 1">
+            <p><span class="math-inline" data-expr="M=\left(\dfrac{2+8}{2},\dfrac{4+10}{2}\right)=\left(\dfrac{10}{2},\dfrac{14}{2}\right)=(5,7)"></span></p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-basic">Basic</span>
+          <p class="problem-text">Find the midpoint of the segment with endpoints <span class="math-inline" data-expr="(-3,-5)"></span> and <span class="math-inline" data-expr="(5,7)"></span>.</p>
+          <div class="toggle-row">
+            <button class="graph-toggle" aria-expanded="false" aria-controls="mgraph2" onclick="togglePanel(this,'mgraph2')"><span aria-hidden="true">📈</span> Show Graph</button>
+            <button class="answer-toggle" aria-expanded="false" aria-controls="mans2" onclick="togglePanel(this,'mans2')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="mgraph2" class="graph-panel" role="region" aria-label="Graph for midpoint problem 2">
+            <div class="diagram-wrap" role="img" aria-label="Segment from (-3,-5) to (5,7). Midpoint at (1,1) marked in orange.">
+              <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <defs><pattern id="gmp2" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0L0 0 0 24" fill="none" stroke="#cdd9dc" stroke-width=".8"/></pattern></defs>
+                <rect width="300" height="300" fill="#f0f6f7"/><rect width="300" height="300" fill="url(#gmp2)"/>
+                <!-- origin at (100,180) step=24 -->
+                <line x1="20" y1="180" x2="280" y2="180" stroke="#3d4a50" stroke-width="1.5"/>
+                <line x1="100" y1="10" x2="100" y2="280" stroke="#3d4a50" stroke-width="1.5"/>
+                <text x="124" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">1</text>
+                <text x="148" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">2</text>
+                <text x="172" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">3</text>
+                <text x="196" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">4</text>
+                <text x="220" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">5</text>
+                <text x="76" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-1</text>
+                <text x="52" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-2</text>
+                <text x="28" y="194" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84" text-anchor="middle">-3</text>
+                <text x="112" y="158" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">1</text>
+                <text x="112" y="134" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">2</text>
+                <text x="112" y="110" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">3</text>
+                <text x="106" y="206" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-1</text>
+                <text x="106" y="230" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-2</text>
+                <text x="106" y="254" font-family="DM Mono,monospace" font-size="9" fill="#6b7c84">-3</text>
+                <!-- (-3,-5)→(28,300)clip; step=20, origin=(100,200) -->
+                <!-- (-3,-5): px=100-60=40, py=200+100=300→clip; use step=18 origin=(154,200) -->
+                <!-- (-3,-5): px=154-54=100, py=200+90=290 -->
+                <!-- (5,7): px=154+90=244, py=200-126=74 -->
+                <!-- M(1,1): px=154+18=172, py=200-18=182 -->
+                <line x1="100" y1="290" x2="244" y2="74" stroke="#1e8a92" stroke-width="2.5"/>
+                <circle cx="100" cy="290" r="5" fill="#0d3b3e"/>
+                <circle cx="244" cy="74" r="5" fill="#0d3b3e"/>
+                <circle cx="172" cy="182" r="7" fill="#e8721c"/>
+                <text x="50" y="286" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(-3,-5)</text>
+                <text x="250" y="72" font-family="DM Sans,sans-serif" font-size="10" fill="#0d3b3e" font-weight="600">(5,7)</text>
+                <text x="178" y="178" font-family="DM Sans,sans-serif" font-size="10" fill="#e8721c" font-weight="700">M(1,1)</text>
+              </svg>
+            </div>
+          </div>
+          <div id="mans2" class="answer-panel" role="region" aria-label="Answer to midpoint problem 2">
+            <p><span class="math-inline" data-expr="M=\left(\dfrac{-3+5}{2},\dfrac{-5+7}{2}\right)=\left(\dfrac{2}{2},\dfrac{2}{2}\right)=(1,1)"></span></p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-medium">With Negatives</span>
+          <p class="problem-text">Find the midpoint of the segment with endpoints <span class="math-inline" data-expr="(-2,-5)"></span> and <span class="math-inline" data-expr="(6,-1)"></span>.</p>
+          <div class="toggle-row">
+            <button class="answer-toggle" aria-expanded="false" aria-controls="mans3" onclick="togglePanel(this,'mans3')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="mans3" class="answer-panel" role="region" aria-label="Answer to midpoint problem 3">
+            <p><span class="math-inline" data-expr="M=\left(\dfrac{-2+6}{2},\dfrac{-5+(-1)}{2}\right)=\left(\dfrac{4}{2},\dfrac{-6}{2}\right)=(2,-3)"></span></p>
+          </div>
+        </li>
+
+        <li class="problem-item">
+          <span class="problem-tag tag-stretch">Stretch: Work Backwards</span>
+          <p class="problem-text">The midpoint of a segment is <span class="math-inline" data-expr="M(3,1)"></span>. One endpoint is <span class="math-inline" data-expr="A(-1,-3)"></span>. Find the other endpoint <span class="math-inline" data-expr="B"></span>.<br>
+          <em style="font-size:.88rem;color:var(--ink-light);">Hint: Set up the midpoint formula and solve for the unknown coordinates.</em></p>
+          <div class="toggle-row">
+            <button class="answer-toggle" aria-expanded="false" aria-controls="mans4" onclick="togglePanel(this,'mans4')"><span aria-hidden="true">▶</span> Show Answer</button>
+          </div>
+          <div id="mans4" class="answer-panel" role="region" aria-label="Answer to midpoint stretch problem">
+            <p>Let <span class="math-inline" data-expr="B=(x,y)"></span>. Then:</p>
+            <p><span class="math-inline" data-expr="\dfrac{-1+x}{2}=3 \Rightarrow -1+x=6 \Rightarrow x=7"></span></p>
+            <p><span class="math-inline" data-expr="\dfrac{-3+y}{2}=1 \Rightarrow -3+y=2 \Rightarrow y=5"></span></p>
+            <p>So <span class="math-inline" data-expr="B=(7,5)"></span>.</p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+
+    <section class="bridge-card" aria-labelledby="bridge-heading">
+      <p class="bridge-eyebrow">You're Ready</p>
+      <h2 id="bridge-heading">Now We Build the Circle</h2>
+      <p>You have the distance formula to measure radius, and the midpoint formula to find centers. Put them together and the equation of a circle is just one more step.</p>
+      <div class="nav-footer">
+        <a href="c4b-equation-of-circle.html" class="nav-btn" aria-label="Next: Equation of a Circle">Next: Equation of a Circle →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script>
+    (function(){
+      document.querySelectorAll('.math-inline').forEach(function(el){try{katex.render(el.dataset.expr,el,{throwOnError:false,displayMode:false});}catch(e){el.textContent=el.dataset.expr;}});
+      document.querySelectorAll('.math-block').forEach(function(el){try{katex.render(el.dataset.expr,el,{throwOnError:false,displayMode:true});}catch(e){el.textContent=el.dataset.expr;}});
+    })();
+    function togglePanel(btn,id){
+      var p=document.getElementById(id);
+      var open=p.classList.contains('open');
+      p.classList.toggle('open',!open);
+      btn.setAttribute('aria-expanded',String(!open));
+      var isG=btn.classList.contains('graph-toggle');
+      var t=btn.childNodes[btn.childNodes.length-1];
+      if(t&&t.nodeType===3) t.textContent=open?(isG?' Show Graph':' Show Answer'):(isG?' Hide Graph':' Hide Answer');
+    }
+  </script>
+</body>
+</html>
